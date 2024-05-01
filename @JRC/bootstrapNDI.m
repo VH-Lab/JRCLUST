@@ -87,6 +87,7 @@ function bootstrapNDI(obj, varargin)
     cfgData.ndiPath = S.path;
     cfgData.ndiElementName = E.name;
     cfgData.ndiElementReference = E.reference;
+    cfgData.ndiScale = 1;
 
     cfgData.useGPU = 0; % safe setting, user can override
     cfgData.useParfor = 0; % safe setting, user can override

@@ -73,10 +73,10 @@ classdef ndiRecording < jrclust.interfaces.RawRecording
             obj.rawIsOpen = 0;
         end
 
-        function roi = readRawROI(obj, rows, cols)
+        function roi = readRawROI(obj, rows, cols,hCfg)
             %READRAWROI Get a region of interest by rows/cols from the raw file
             t0t1 = samples2times(obj.E, obj.epoch_id, cols([1 end]));
-            roi = readtimeseries(obj.E, obj.epoch_id, t0t1(1), t0t1(2));
+            roi = hCfg.ndiScale*readtimeseries(obj.E, obj.epoch_id, t0t1(1), t0t1(2));
             roi = roi'; % switch to column-based samples
             roi = single(roi(rows,:)); % if only a subset requested, return only the subset
         end % readRawROI()

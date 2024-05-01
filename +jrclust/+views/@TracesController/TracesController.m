@@ -90,7 +90,7 @@ classdef TracesController < jrclust.interfaces.FigureController
                     nTimeTraces = obj.hCfg.nSegmentsTraces;
                     multiBounds = jrclust.views.sampleSkip(windowBounds, obj.hFigTraces.figData.nSamplesTotal, nTimeTraces);
 
-                    tracesRaw_ = cellfun(@(lims) obj.hRec.readRawROI(obj.hCfg.siteMap, lims(1):lims(2)), multiBounds, 'UniformOutput', 0);
+                    tracesRaw_ = cellfun(@(lims) obj.hRec.readRawROI(obj.hCfg.siteMap, lims(1):lims(2),obj.hCfg), multiBounds, 'UniformOutput', 0);
                     obj.tracesRaw = jrclust.utils.neCell2mat(tracesRaw_);
                     %if size(tracesRaw_{1},2)~=diff(multiBounds{1})+1, keyboard; end; % sometimes a useful debugging line
 
@@ -289,7 +289,7 @@ classdef TracesController < jrclust.interfaces.FigureController
             multiBounds = jrclust.views.sampleSkip(windowBounds, nSamplesTotal, obj.hCfg.nSegmentsTraces);
 
             obj.tracesFull = [];
-            tracesRaw_ = cellfun(@(lims) obj.hRec.readRawROI(obj.hCfg.siteMap, lims(1):lims(2)), multiBounds, 'UniformOutput', 0);
+            tracesRaw_ = cellfun(@(lims) obj.hRec.readRawROI(obj.hCfg.siteMap, lims(1):lims(2),obj.hCfg), multiBounds, 'UniformOutput', 0);
             obj.tracesRaw = jrclust.utils.neCell2mat(tracesRaw_);
 
         %     if obj.hCfg.tallSkinny

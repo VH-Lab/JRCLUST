@@ -61,7 +61,7 @@ classdef (Abstract) RawRecording < handle
 
     %% ABSTRACT METHODS
     methods (Abstract)
-        roi = readRawROI(obj, rows, cols);
+        roi = readRawROI(obj, rows, cols,configuration);
     end
 
     %% GETTERS/SETTERS

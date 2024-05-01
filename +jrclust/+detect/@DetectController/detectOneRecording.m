@@ -43,7 +43,7 @@ function recData = detectOneRecording(obj, hRec, fids, impTimes, impSites, siteT
             end
 
             % load raw samples
-            iSamplesRaw = hRec.readRawROI(obj.hCfg.siteMap, 1+loadOffset:loadOffset+nSamples);
+            iSamplesRaw = hRec.readRawROI(obj.hCfg.siteMap, 1+loadOffset:loadOffset+nSamples,obj.hCfg);
 
             % convert samples to int16
             iSamplesRaw = samplesToInt16(iSamplesRaw, obj.hCfg);
@@ -52,7 +52,7 @@ function recData = detectOneRecording(obj, hRec, fids, impTimes, impSites, siteT
             if iLoad < nLoads && obj.hCfg.nSamplesPad > 0
                 leftBound = loadOffset + nSamples + 1;
                 rightBound = leftBound + obj.hCfg.nSamplesPad - 1;
-                samplesPost = hRec.readRawROI(obj.hCfg.siteMap, leftBound:rightBound);
+                samplesPost = hRec.readRawROI(obj.hCfg.siteMap, leftBound:rightBound,obj.hCfg);
                 samplesPost = samplesToInt16(samplesPost, obj.hCfg);
             else
                 samplesPost = [];
@@ -135,7 +135,7 @@ function recData = detectOneRecording(obj, hRec, fids, impTimes, impSites, siteT
         % if in import mode, only process loads where there are imported spikes.    
         if isempty(impTimes) || any(inInterval) 
             % load raw samples
-            iSamplesRaw = hRec.readRawROI(obj.hCfg.siteMap, 1+loadOffset:loadOffset+nSamples);
+            iSamplesRaw = hRec.readRawROI(obj.hCfg.siteMap, 1+loadOffset:loadOffset+nSamples,obj.hCfg);
 
             % convert samples to int16
             iSamplesRaw = samplesToInt16(iSamplesRaw, obj.hCfg);
@@ -144,7 +144,7 @@ function recData = detectOneRecording(obj, hRec, fids, impTimes, impSites, siteT
             if iLoad < nLoads && obj.hCfg.nSamplesPad > 0
                 leftBound = loadOffset + nSamples + 1;
                 rightBound = leftBound + obj.hCfg.nSamplesPad - 1;
-                samplesPost = hRec.readRawROI(obj.hCfg.siteMap, leftBound:rightBound);
+                samplesPost = hRec.readRawROI(obj.hCfg.siteMap, leftBound:rightBound,obj.hCfg);
                 samplesPost = samplesToInt16(samplesPost, obj.hCfg);
             else
                 samplesPost = [];

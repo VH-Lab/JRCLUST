@@ -255,7 +255,7 @@ classdef PreviewController < jrclust.interfaces.FigureController
                 hRec.openRaw();
                 for iLoad = 1:nLoadsFile
                     iBounds = multiBounds{iLoad};
-                    fileTraces_{iLoad} = hRec.readRawROI(obj.hCfg.siteMap, iBounds(1):iBounds(2))';
+                    fileTraces_{iLoad} = hRec.readRawROI(obj.hCfg.siteMap, iBounds(1):iBounds(2),obj.hCfg)';
                 end
                 hRec.closeRaw();
 

@@ -116,7 +116,7 @@ function [auxSamples, auxTimes] = loadAuxChannel(hCfg)
             end
             try
                 hRec = jrclust.detect.newRecording(hCfg.auxFile, hCfg);
-                auxSamples = single(hRec.readRawROI(hCfg.auxChan, 1:hRec.nSamples))*hCfg.bitScaling*hCfg.auxScale;
+                auxSamples = single(hRec.readRawROI(hCfg.auxChan, 1:hRec.nSamples,hCfg))*hCfg.bitScaling*hCfg.auxScale;
                 auxRate = hCfg.getOr('auxRate', hCfg.sampleRate);
             catch % data not from SpikeGLX
                 auxData = load(hCfg.auxFile); %load .mat file containing Aux data 
