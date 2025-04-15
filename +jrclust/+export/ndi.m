@@ -216,7 +216,7 @@ function ndi(hCfg, varargin)
           if value<0, continue; end; % skip the cell if it is not even a multi-unit
           neuron_extracellular.quality_number = value;
           neuron_extracellular.quality_label = c.clusterNotes{clusters_to_output(i)};
-          neuron_doc = ndi.document('neuron/neuron_extracellular.json','app',app_struct,'neuron_extracellular',neuron_extracellular,...
+          neuron_doc = ndi.document('neuron_extracellular','app',app_struct,'neuron_extracellular',neuron_extracellular,...
 		'base.session_id',S.id());
           neuron_doc = neuron_doc.set_dependency_value('element_id',element_neuron.id());
           S.database_add(neuron_doc);
