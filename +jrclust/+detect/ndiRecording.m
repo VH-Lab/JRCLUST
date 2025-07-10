@@ -62,6 +62,7 @@ classdef ndiRecording < jrclust.interfaces.RawRecording
             end;
             obj.nsamples = 1+diff(times2samples(obj.E,epoch_id,obj.t0_t1));
             obj.dshape = [hCfg.nChans, obj.nsamples];
+            mksqlite('close');
         end % ndiRecording()
 
         function openRaw(obj)
