@@ -7,7 +7,10 @@ function bootstrapNDI(obj, varargin)
     % the ndi.session that is indicated. 
     %
     % The JRCLUST analysis files will be installed at the path to NDI_SESSION_DIR_OBJ in a folder
-    % called '.JRCLUST' and another subfolder with the string name of NDI_ELEMENT_TIMESERIES_OBJ. 
+    % called '.JRCLUST' and another subfolder named for NDI_ELEMENT_TIMESERIES_OBJ. That
+    % subfolder name comes from ndi.fun.file.elementDirectoryName; for an element named
+    % 'ctx' with reference 1 it is 'ctx_-_1'. Subfolders written by older versions, which
+    % used a '|' separator ('ctx_|_1'), are still found and reused when present.
     % 
     % During bootstrap, all epochs of NDI_ELEMENT_TIMESERIES_OBJ are added for extraction. They
     % can be edited down as needed in the editor.
@@ -57,9 +60,16 @@ function bootstrapNDI(obj, varargin)
         doEdit = {'showEdit'};
     end;
 
-    Estring = E.elementstring();
-    Estring(find(Estring==' ')) = '_';
-    output_dir = [S.path filesep '.JRCLUST' filesep Estring];
+    % The element string contains a '|', which is not a legal filename character on
+    % Windows, so build the folder name with NDI's platform-independent helper. It
+    % also finds and reuses a folder written under the older '|' name, so an
+    % existing analysis directory is not orphaned.
+    if isempty(which('ndi.fun.file.elementDirectory')),
+        error(['This version of NDI is too old for the JRCLUST NDI bootstrap ' ...
+            '(ndi.fun.file.elementDirectory is missing). Please update ' ...
+            'https://github.com/VH-Lab/NDI-matlab ']);
+    end;
+    output_dir = ndi.fun.file.elementDirectory([S.path filesep '.JRCLUST'], E);
     output_file = [output_dir filesep 'jrclust.prm'];
     if ~exist(output_dir,'dir'),
         try,
