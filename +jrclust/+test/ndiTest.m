@@ -8,10 +8,18 @@ classdef ndiTest < matlab.uitest.TestCase & matlab.mock.TestCase
 			E = E{1};
 			jrc('bootstrap','ndi',S,E,'noShow');
 
-			paramdir = dir([S.path() filesep '.JRCLUST' filesep '*_|_*'])
+			% the parameter folder is named for the element by
+			% ndi.fun.file.elementDirectoryName; its name must be legal on
+			% every platform, so it must not contain '|' (illegal on Windows)
+			[paramdir, dirname] = ndi.fun.file.elementDirectory([S.path() filesep '.JRCLUST'], E);
 
-			paramfile = [S.path() filesep '.JRCLUST' filesep paramdir(1).name ...
-				filesep 'jrclust.prm'];
+			tc.verifyTrue(isfolder(paramdir), ...
+				['Bootstrap did not create the parameter folder ' paramdir '.']);
+
+			tc.verifyEmpty(strfind(dirname,'|'), ...
+				['Parameter folder name ''' dirname ''' contains a ''|'', which is not a legal filename character on Windows.']);
+
+			paramfile = [paramdir filesep 'jrclust.prm'];
 
 			eval(['jrc detect ' paramfile]);
 		end;
